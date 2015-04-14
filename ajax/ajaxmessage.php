@@ -25,7 +25,7 @@ $id			= $_SESSION['userID'];
 if (mysqli_query($bdd,'INSERT INTO test_messages (content, author, created) VALUES ("'.$content.'", '.$id.', NOW())'))
 	$response['data'] 	= "Message enregistré";
 else
-	$response['error'] 	= "Erreur. Veuillez ressayer.");
+	$response['error'] 	= "Erreur. Veuillez ressayer.";
 
 echo json_encode($response);
 mysqli_close($bdd);
