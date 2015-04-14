@@ -50,7 +50,7 @@ $lastname		= mysqli_real_escape_string($bdd,$_POST["lastname"]);
 
 
 //insertion des chaînes de caractères dans la bdd
-if (mysqli_query($bdd,'INSERT INTO test_users(username,password,email,firstname,lastname) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
+if (mysqli_query($bdd,'INSERT INTO test_users(username,password,email,firstName,lastName) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
 	$response['data'] 	= "Utilisateur enregistré";
 else
 	$response['error'] 	= "Erreur";
