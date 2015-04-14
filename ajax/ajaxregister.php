@@ -1,6 +1,6 @@
 <?php
 
-header('Content-Type: text/html; charset=utf-8');
+header('Content-Type: application/json; charset=utf-8');
 
 $response = array(
 	'error' => '',
@@ -50,10 +50,10 @@ $lastname		= mysqli_real_escape_string($bdd,$_POST["lastname"]);
 
 
 //insertion des chaînes de caractères dans la bdd
-if (mysqli_query($bdd,'INSERT INTO test_users(username,password,email,firstName,lastName) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
+if (mysqli_query($bdd,'INSERT INTO test_users (username,password,email,firstName,lastName) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
 	$response['data'] 	= "Utilisateur enregistré";
 else
-	$response['error'] 	= "Erreur";
+	$response['error'] 	= "Erreur. Veuillez ressayer";
 
 echo json_encode($response);
 mysqli_close($bdd);
