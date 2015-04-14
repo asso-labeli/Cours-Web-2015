@@ -7,8 +7,8 @@ $response = array(
 	'data' 	=> '',
 );
 
-//Vérification des champs données par le HTML
-if (empty ($_POST["username"])) {//vérifier si la case existe et si elle est remplie
+// Vérification si les champs reçus ne sont pas vides
+if (empty ($_POST["username"])) {
 	$response['error'] = "Nom d'utilisateur obligatoire";
 	echo json_encode($response);
 	exit();
@@ -33,6 +33,7 @@ if (empty ($_POST["lastname"])) {
 	echo json_encode($response);
 	exit();
 }
+// Vérification si les champs passwords sont egaux
 if ($_POST["password"] != $_POST["password1"]){
 	$response['error'] = "Les mots de passe ne sont pas identiques";
 	echo json_encode($response);
@@ -41,19 +42,18 @@ if ($_POST["password"] != $_POST["password1"]){
 
 require_once 'include/bdd.php';
 
-$password= password_hash($_POST["password"], PASSWORD_DEFAULT);
-
-$username=mysqli_real_escape_string($bdd,$_POST["username"]);
-$email=mysqli_real_escape_string($bdd,$_POST["email"]);
-$firstname=mysqli_real_escape_string($bdd,$_POST["firstname"]);
-$lastname=mysqli_real_escape_string($bdd,$_POST["lastname"]);
+$password		= password_hash($_POST["password"], PASSWORD_DEFAULT);
+$username		= mysqli_real_escape_string($bdd,$_POST["username"]);
+$email			= mysqli_real_escape_string($bdd,$_POST["email"]);
+$firstname		= mysqli_real_escape_string($bdd,$_POST["firstname"]);
+$lastname		= mysqli_real_escape_string($bdd,$_POST["lastname"]);
 
 
 //insertion des chaînes de caractères dans la bdd
 if (mysqli_query($bdd,'INSERT INTO test_users(username,password,email,firstname,lastname) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
-	$response['data'] = "Utilisateur enregistré";
+	$response['data'] 	= "Utilisateur enregistré";
 else
-	$response['error'] = "Erreur";
+	$response['error'] 	= "Erreur";
 
 echo json_encode($response);
 mysqli_close($bdd);
