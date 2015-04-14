@@ -16,7 +16,7 @@ if (empty ($_POST["password"])) {
 	echo json_encode($response);
 	exit();
 }
-require_once 'include/bdd.php';
+require_once '../include/bdd.php';
 
 $username	= mysqli_real_escape_string($bdd,$_POST["username"]);
 $password	= $_POST['password'];
