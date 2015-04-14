@@ -1,31 +1,43 @@
 <?php
 
-//header('Content-Type: text/html; charset=utf-8');
+$response = array(
+	'error' => '',
+	'data' 	=> '',
+);
 
-if (empty ($_POST["username"])) {//vérifier si la case existe et si elle est remplie
-	die("Nom d'utilisateur obligatoire");
+// Vérification si les champs reçus ne sont pas vides
+if (empty ($_POST["username"])) {
+	$response['error'] = "Nom d'utilisateur obligatoire";
+	echo json_encode($response);
+	exit();
 }
 if (empty ($_POST["password"])) {
-	die("Mot de passe obligatoire");
+	$response['error'] = "Mot de passe obligatoire";
+	echo json_encode($response);
+	exit();
 }
 require_once 'include/bdd.php';
 
-$username=mysqli_real_escape_string($bdd,$_POST["username"]);
-$password=$_POST['password'];
+$username	= mysqli_real_escape_string($bdd,$_POST["username"]);
+$password	= $_POST['password'];
+$result 	= mysqli_query($bdd,'SELECT * FROM test_users WHERE username="'.$username.'"');
+$user 		= mysqli_fetch_array($result, MYSQLI_ASSOC);
 
-$result = mysqli_query($bdd,'SELECT * FROM test_users WHERE username="'.$username.'"');
-$user = mysqli_fetch_array($result, MYSQLI_ASSOC);
 if (empty($user))
-	die("C'est faux");
+{
+	$response['error'] = "Nom d'utilisateur inconnu";
+	echo json_encode($response);
+	exit();
+}
 
 if(password_verify($password,$user['password'])) {
-	//echo 'Vous êtes connecté';
 	session_start();
-	$_SESSION['userID']=$user['id'];
-	header('Location: account.php');
+	$_SESSION['userID'] = $user['id'];
+	$response['data'] 	= $user['id'];
 }
 else
-	die ('Combinaison utilisateur/mot de passe erronée');
+	$response['error'] = "Mot de passe erroné";
+echo json_encode($response);
 
 mysqli_close($bdd);
 ?>
