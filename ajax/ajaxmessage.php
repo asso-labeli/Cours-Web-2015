@@ -22,7 +22,7 @@ $id			= $_SESSION['userID'];
 
 
 //insertion des chaînes de caractères dans la bdd
-if (mysqli_query($bdd,'INSERT INTO test_messages (content,author,created) VALUES ("'.$content.'","'.$id.'",NOW())'))
+if (mysqli_query($bdd,'INSERT INTO test_messages (content, author, created) VALUES ("'.$content.'", '.$id.', NOW())'))
 	$response['data'] 	= "Message enregistré";
 else
 	$response['error'] 	= "Erreur. Veuillez ressayer";
