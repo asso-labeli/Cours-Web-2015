@@ -8,7 +8,7 @@ $response = array(
 );
 
 // Vérification si les champs reçus ne sont pas vides
-if (empty ($_POST["message"])) {
+if (empty($_POST["message"])) {
 	$response['error'] = "Message obligatoire";
 	echo json_encode($response);
 	exit();
