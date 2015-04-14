@@ -1,29 +1,41 @@
 <?php
 
 header('Content-Type: text/html; charset=utf-8');
+
+$response = array(
+	'error' => '',
+	'data' 	=> '',
+);
+
 //Vérification des champs données par le HTML
 if (empty ($_POST["username"])) {//vérifier si la case existe et si elle est remplie
-	echo "Nom d'utilisateur obligatoire";
+	$response['error'] = "Nom d'utilisateur obligatoire";
+	echo json_encode($response);
 	exit();
 }
 if (empty ($_POST["password"])) {
-	echo "Mot de passe obligatoire";
+	$response['error'] = "Mot de passe obligatoire";
+	echo json_encode($response);
 	exit();
 }
 if (empty ($_POST["email"])) {
-	echo "Adresse mail obligatoire";
+	$response['error'] = "Adresse mail obligatoire";
+	echo json_encode($response);
 	exit();
 }
 if (empty ($_POST["firstname"])) {
-	echo "Prénom obligatoire";
+	$response['error'] = "Prénom obligatoire";
+	echo json_encode($response);
 	exit();
 }
 if (empty ($_POST["lastname"])) {
-	echo "Nom obligatoire";
+	$response['error'] = "Nom obligatoire";
+	echo json_encode($response);
 	exit();
 }
 if ($_POST["password"] != $_POST["password1"]){
-	echo("Les mots de passe ne sont pas identiques");
+	$response['error'] = "Les mots de passe ne sont pas identiques";
+	echo json_encode($response);
 	exit();
 }
 
@@ -39,9 +51,10 @@ $lastname=mysqli_real_escape_string($bdd,$_POST["lastname"]);
 
 //insertion des chaînes de caractères dans la bdd
 if (mysqli_query($bdd,'INSERT INTO test_users(username,password,email,firstname,lastname) VALUES ("'.$username.'","'.$password.'","'.$email.'","'.$firstname.'","'.$lastname.'")'))
-	echo "Utilisateur enregistré";
+	$response['data'] = "Utilisateur enregistré";
 else
-	echo "Erreur";
+	$response['error'] = "Erreur";
 
+echo json_encode($response);
 mysqli_close($bdd);
 ?>
